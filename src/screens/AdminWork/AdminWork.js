@@ -1,6 +1,13 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
-
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 
@@ -74,7 +81,14 @@ const AdminWork = (props) => {
           <Text style={styles.title}>Admin Panel</Text>
           {user != undefined && <Text style={styles.user}>Hello {user}</Text>}
 
-          <Text style={{ marginLeft: 10, fontSize: 13, fontWeight: "bold" }}>
+          <Text
+            style={{
+              marginLeft: 10,
+              fontSize: 13,
+              fontWeight: "bold",
+              marginTop: 37,
+            }}
+          >
             Make an Admin
           </Text>
         </View>
@@ -105,6 +119,31 @@ const AdminWork = (props) => {
           <CustomButton text="Confirm" onPress={addAdmin} />
         </View>
       </View>
+      <Text style={{textAlign:"center", marginTop:60, color: "#EF0EA4",}}>Handle New Rider Account </Text>
+      <View style={{ marginTop: 60, backgroundColor: "#D7BDE2", height: 250 }}>
+        <View>
+          <Pressable
+            // onPress={onPress}
+            style={styles.rider}
+          >
+            <Text
+              style={{ color: "#34495E", textAlign: "center", marginTop: 10 }}
+            >
+              Rider
+            </Text>
+          </Pressable>
+          <Pressable
+            // onPress={onPress}
+            style={styles.addRider}
+          >
+            <Text
+              style={{ color: "#1D8348", textAlign: "center", marginTop: 10 }}
+            >
+              Add New Rider
+            </Text>
+          </Pressable>
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -116,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#F9EBEA",
-    height: "100%",
+    marginTop: 22,
   },
   gap: {
     marginTop: "5%",
@@ -127,12 +166,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     backgroundColor: "#FE9B93",
+    marginTop: 30,
   },
   user: {
     textAlign: "right",
     fontSize: 15,
     fontWeight: "bold",
-    color: "#051C60",
-    margin: 10,
+    color: "#EF0EA4",
+    marginTop: 25,
+    marginRight: 12,
+    // color:
+  },
+  rider: {
+    width: 180,
+    height: 50,
+    backgroundColor: "#D4EFDF",
+    marginTop: 50,
+    marginLeft: 30,
+    borderRadius: 10,
+  },
+  addRider: {
+    fontWeight: "700",
+    marginTop: 50,
+    marginLeft: 270,
+    backgroundColor: "#F9E79F",
+    width: 180,
+    height: 50,
+    color: "white",
+    borderRadius: 10,
   },
 });
