@@ -90,7 +90,7 @@ const AdminWork = (props) => {
 
   const handleLogout = () => {
     navigation.navigate("Actor");
-  }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -138,7 +138,16 @@ const AdminWork = (props) => {
 
           <View style={styles.gap} />
 
-          <CustomButton text="Add Admin" onPress={addAdmin} />
+          {/* <CustomButton text="Add Admin" onPress={addAdmin} /> */}
+          <Button
+            style={{ width: 450, backgroundColor:"#3B4CFA", height:50}}
+            onPress={addAdmin}
+            icon="update"
+            mode="contained"
+          >
+            {" "}
+            Add New Admin
+          </Button>
         </View>
       </View>
       <Text style={{ textAlign: "center", marginTop: 60, color: "#EF0EA4" }}>
@@ -149,7 +158,7 @@ const AdminWork = (props) => {
           <Button
             style={{ width: 206 }}
             onPress={updateRider}
-            icon="update"
+            icon="pencil"
             mode="contained"
           >
             {" "}
@@ -159,24 +168,29 @@ const AdminWork = (props) => {
           <Button
             style={{ width: 207 }}
             onPress={addRider}
-            icon="plus"
+            icon="bike"
             mode="contained"
           >
             {" "}
             Add New Rider
           </Button>
         </View>
-        
       </View>
       <Button
-            style={{ width: 150, backgroundColor:"red", marginLeft:'auto', marginRight:'auto', marginTop:5}}
-            onPress={handleLogout}
-            icon="logout"
-            mode="contained"
-          >
-            {" "}
-            Logout
-          </Button>
+        style={{
+          width: 150,
+          backgroundColor: "red",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop: 15,
+        }}
+        onPress={handleLogout}
+        icon="logout"
+        mode="contained"
+      >
+        {" "}
+        Logout
+      </Button>
     </ScrollView>
   );
 };
