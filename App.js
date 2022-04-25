@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import Navigation from "./src/navigation";
+import Contants from 'expo-constants';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
+    marginTop: Contants.statusBarHeight
   },
 });
 

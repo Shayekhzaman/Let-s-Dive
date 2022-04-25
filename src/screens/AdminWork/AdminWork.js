@@ -10,13 +10,14 @@ import {
 import React, { useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
-
+import { Card, FAB, Button, TextInput } from "react-native-paper";
 import { auth } from "../../../firebase/Admin/firebase.config";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
 } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const AdminWork = (props) => {
   const { user } = props.route.params;
@@ -27,6 +28,8 @@ const AdminWork = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigation();
 
   //   sign up
   const addAdmin = () => {
@@ -72,6 +75,23 @@ const AdminWork = (props) => {
       .catch((err) => {});
   };
 
+  // go to add rider screen
+
+  const addRider = () => {
+    // alert("click")
+    navigation.navigate("AddRider");
+  };
+
+  // go to update screens
+  const updateRider = () => {
+    // alert("click");
+    navigation.navigate("UpdateRider");
+  };
+
+  const handleLogout = () => {
+    navigation.navigate("Actor");
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
@@ -116,34 +136,47 @@ const AdminWork = (props) => {
             // or just secureTextEntry
           />
 
-          <CustomButton text="Confirm" onPress={addAdmin} />
+          <View style={styles.gap} />
+
+          <CustomButton text="Add Admin" onPress={addAdmin} />
         </View>
       </View>
-      <Text style={{textAlign:"center", marginTop:60, color: "#EF0EA4",}}>Handle New Rider Account </Text>
-      <View style={{ marginTop: 60, backgroundColor: "#D7BDE2", height: 250 }}>
-        <View>
-          <Pressable
-            // onPress={onPress}
-            style={styles.rider}
+      <Text style={{ textAlign: "center", marginTop: 60, color: "#EF0EA4" }}>
+        Handle New Rider Account{" "}
+      </Text>
+      <View style={{ marginTop: 60, backgroundColor: "#D3D6F9", height: 180 }}>
+        <View style={styles.btnStyle}>
+          <Button
+            style={{ width: 206 }}
+            onPress={updateRider}
+            icon="update"
+            mode="contained"
           >
-            <Text
-              style={{ color: "#34495E", textAlign: "center", marginTop: 10 }}
-            >
-              Rider
-            </Text>
-          </Pressable>
-          <Pressable
-            // onPress={onPress}
-            style={styles.addRider}
+            {" "}
+            Update Rider
+          </Button>
+
+          <Button
+            style={{ width: 207 }}
+            onPress={addRider}
+            icon="plus"
+            mode="contained"
           >
-            <Text
-              style={{ color: "#1D8348", textAlign: "center", marginTop: 10 }}
-            >
-              Add New Rider
-            </Text>
-          </Pressable>
+            {" "}
+            Add New Rider
+          </Button>
         </View>
+        
       </View>
+      <Button
+            style={{ width: 150, backgroundColor:"red", marginLeft:'auto', marginRight:'auto', marginTop:5}}
+            onPress={handleLogout}
+            icon="logout"
+            mode="contained"
+          >
+            {" "}
+            Logout
+          </Button>
     </ScrollView>
   );
 };
@@ -166,7 +199,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     backgroundColor: "#FE9B93",
-    marginTop: 30,
+    // marginTop: 30,
+    height: 60,
   },
   user: {
     textAlign: "right",
@@ -177,22 +211,10 @@ const styles = StyleSheet.create({
     marginRight: 12,
     // color:
   },
-  rider: {
-    width: 180,
-    height: 50,
-    backgroundColor: "#D4EFDF",
-    marginTop: 50,
-    marginLeft: 30,
-    borderRadius: 10,
-  },
-  addRider: {
-    fontWeight: "700",
-    marginTop: 50,
-    marginLeft: 270,
-    backgroundColor: "#F9E79F",
-    width: 180,
-    height: 50,
-    color: "white",
-    borderRadius: 10,
+  btnStyle: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    margin: 15,
+    paddingTop: 60,
   },
 });
