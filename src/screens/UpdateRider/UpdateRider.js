@@ -1,28 +1,53 @@
-import { StyleSheet, Text, View, Image,  } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import { Card, FAB, Button, TextInput } from "react-native-paper";
 
-const UpdateRider = () => {
+
+const UpdateRider = (props) => {
+
+  // const {licenseId} = props.route.params;
+  // console.warn(licenseId);
+
   const [licenseNumber, setLicenseNumber] = useState("");
   const [rider, setRider] = useState("");
+  const [error, setError] = useState("");
 
+  const { name, license_no, image } = rider;
+  // console.warn(name, license_no, image);
+  
+// search rider
   const searchRider = () => {
-    console.warn(licenseNumber);
+    setRider("");
+    fetch(`http://192.168.0.104:5000/get/${licenseNumber}/`, {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if(data.name === undefined){
+          setError("Rider Not Found")
+        }
+        
+        setRider(data);
+      })
+      .catch((err) => {
+        // alert("");
+        setError("Please Give The Valid License Number");
+      });
   };
 
-  const local = {
-    name: "S. M. Ashik Uz-Zaman",
-    image: "https://i.ibb.co/QDw13Pr/jayed-removebg-preview.png",
-    licenseNumber: 28476523,
+  // const local = {
+  //   name: "S. M. Ashik Uz-Zaman",
+  //   image: "https://i.ibb.co/QDw13Pr/jayed-removebg-preview.png",
+  //   licenseNumber: 28476523,
+  // };
+
+  const handleDelete = () => {
+    alert("Delete");
   };
 
-  const handleDelete =()=>{
-    alert("Delete")
-}
-
-    const handleUpdate = () => {
-        alert("update")
-    }
+  const handleUpdate = () => {
+    alert("update");
+  };
   return (
     <View style={{ marginTop: 50, backgroundColor: "#FCF3CF", height: "100%" }}>
       <Text
@@ -59,54 +84,59 @@ const UpdateRider = () => {
         Search for Rider
       </Button>
 
-      <Card style={styles.cardStyle}>
-        <Image
-          style={{
-            width: 170,
-            height: 220,
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-          source={{ uri: `${local.image}` }}
-        />
-        <Text style={styles.cardText}> {local.name}</Text>
-        <Text style={styles.cardText}>
-          License Number: {local.licenseNumber}
-        </Text>
-      </Card>
+      {name !== undefined && (
+        <View>
+          <Card style={styles.cardStyle}>
+            <Image
+              style={{
+                width: 160,
+                height: 220,
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              source={{ uri: `${image}` }}
+            />
+            <Text style={styles.cardText}> {name}</Text>
+            <Text style={styles.cardText}>License Number: {license_no}</Text>
+          </Card>
 
-      <View style={styles.btnStyle}>
-        <Button
-          style={{
-            //   width: 150,
-            backgroundColor: "red",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: 5,
-          }}
-          onPress={handleDelete}
-          icon="delete"
-          mode="contained"
-        >
-          {" "}
-          Delete
-        </Button>
-        <Button
-          style={{
-            //   width: 150,
-            backgroundColor: "#2980B9",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: 5,
-          }}
-          onPress={handleUpdate}
-          icon="pencil"
-          mode="contained"
-        >
-          {" "}
-          Update
-        </Button>
-      </View>
+          <View style={styles.btnStyle}>
+            <Button
+              style={{
+                //   width: 150,
+                backgroundColor: "red",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 5,
+              }}
+              onPress={handleDelete}
+              icon="delete"
+              mode="contained"
+            >
+              {" "}
+              Delete
+            </Button>
+            <Button
+              style={{
+                //   width: 150,
+                backgroundColor: "#2980B9",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 5,
+              }}
+              onPress={handleUpdate}
+              icon="pencil"
+              mode="contained"
+            >
+              {" "}
+              Update
+            </Button>
+          </View>
+        </View>
+      )}
+      {
+        name === undefined && <Text style={styles.errorText}>{error}</Text>
+      }
     </View>
   );
 };
@@ -120,12 +150,14 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     paddingBottom: 20,
+    paddingTop:20,
     backgroundColor: "#F6DDCC",
   },
   cardText: {
     textAlign: "center",
     fontSize: 16,
     color: "#273746",
+    fontWeight: "bold",
   },
   btnStyle: {
     flexDirection: "row",
@@ -133,4 +165,10 @@ const styles = StyleSheet.create({
     margin: 15,
     paddingTop: 60,
   },
+  errorText:{
+    textAlign: "center",
+    fontSize:18,
+    color: "red",
+    marginTop:300
+  }
 });

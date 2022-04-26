@@ -2,9 +2,13 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Card, FAB, Button, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput";
+import { useNavigation } from "@react-navigation/native";
+
 
 const AddRider = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+
+  const navigation = useNavigation();
 
   const [licenseNo, setLicenseNo] = useState("");
   const [name, setName] = useState("");
@@ -38,7 +42,10 @@ const AddRider = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.warn(data);
+        const licenseNumber = data.license_no;
+        navigation.navigate("UpdateRider", {
+          licenseId: licenseNumber,
+        })
       })
       .catch((err) => {
         console.warn(err.message);
