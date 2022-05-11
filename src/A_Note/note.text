@@ -1,0 +1,5 @@
+server url:
+1.updateRider
+2.addRider
+
+qr: npm install rn-qr-generator --save

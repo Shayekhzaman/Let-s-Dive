@@ -33,7 +33,7 @@ const AddRider = () => {
   };
 
   const insertRider = () => {
-    fetch("http://192.168.0.104:5000/add", {
+    fetch("http://192.168.31.160:5000/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

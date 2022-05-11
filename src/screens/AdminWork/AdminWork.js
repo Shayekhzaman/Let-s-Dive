@@ -142,7 +142,7 @@ const AdminWork = (props) => {
           <Button
             style={{ width: 450, backgroundColor:"#3B4CFA", height:50}}
             onPress={addAdmin}
-            icon="update"
+            icon="plus"
             mode="contained"
           >
             {" "}
@@ -151,14 +151,14 @@ const AdminWork = (props) => {
         </View>
       </View>
       <Text style={{ textAlign: "center", marginTop: 60, color: "#EF0EA4" }}>
-        Handle New Rider Account{" "}
+        Rider Account Management{" "}
       </Text>
       <View style={{ marginTop: 60, backgroundColor: "#D3D6F9", height: 180 }}>
         <View style={styles.btnStyle}>
           <Button
             style={{ width: 206 }}
             onPress={updateRider}
-            icon="pencil"
+            icon="update"
             mode="contained"
           >
             {" "}

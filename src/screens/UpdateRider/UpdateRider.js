@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import { Card, FAB, Button, TextInput } from "react-native-paper";
-
+import { useNavigation } from "@react-navigation/native";
 
 const UpdateRider = (props) => {
+
+  const navigation = useNavigation();
 
   // const {licenseId} = props.route.params;
   // console.warn(licenseId);
@@ -13,43 +15,67 @@ const UpdateRider = (props) => {
   const [error, setError] = useState("");
 
   const { name, license_no, image } = rider;
-  // console.warn(name, license_no, image);
-  
-// search rider
+  // console.warn( license_no);
+
+  // search rider
   const searchRider = () => {
     setRider("");
-    fetch(`http://192.168.0.104:5000/get/${licenseNumber}/`, {
+    fetch(`http://192.168.31.160:5000/get/${licenseNumber}/`, {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((data) => {
-        if(data.name === undefined){
-          setError("Rider Not Found")
+        if (data.name === undefined) {
+          setError("Rider Not Found");
         }
-        
+
         setRider(data);
+       
       })
       .catch((err) => {
-        // alert("");
         setError("Please Give The Valid License Number");
       });
   };
 
-  // const local = {
-  //   name: "S. M. Ashik Uz-Zaman",
-  //   image: "https://i.ibb.co/QDw13Pr/jayed-removebg-preview.png",
-  //   licenseNumber: 28476523,
-  // };
-
-  const handleDelete = () => {
-    alert("Delete");
+  // Handle delete rider
+  const handleDelete = (license) => {
+    // console.warn(license, "Delete")
+    fetch(`http://192.168.31.160:5000/delete/${license}/`,{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(data =>{
+      setRider("");
+      setError("This rider remove successfully")
+    })
+    .catch(err =>{
+      // console.warn(err.message);
+    })
+   
   };
+
+  // view user details 
+  const userDetails =() =>{
+    // alert("press me");
+    navigation.navigate("RiderDetails",{
+      rider: rider,
+    })
+  }
+
+  // handle update rider information
 
   const handleUpdate = () => {
-    alert("update");
+    navigation.navigate("EditRider",{
+      rider: rider,
+    })
   };
+
+  
   return (
     <View style={{ marginTop: 50, backgroundColor: "#FCF3CF", height: "100%" }}>
+      
       <Text
         style={{
           textAlign: "center",
@@ -86,7 +112,7 @@ const UpdateRider = (props) => {
 
       {name !== undefined && (
         <View>
-          <Card style={styles.cardStyle}>
+          <Card style={styles.cardStyle} onPress={userDetails}>
             <Image
               style={{
                 width: 160,
@@ -98,6 +124,7 @@ const UpdateRider = (props) => {
             />
             <Text style={styles.cardText}> {name}</Text>
             <Text style={styles.cardText}>License Number: {license_no}</Text>
+           
           </Card>
 
           <View style={styles.btnStyle}>
@@ -109,7 +136,7 @@ const UpdateRider = (props) => {
                 marginRight: "auto",
                 marginTop: 5,
               }}
-              onPress={handleDelete}
+              onPress={()=>handleDelete(license_no)}
               icon="delete"
               mode="contained"
             >
@@ -129,14 +156,12 @@ const UpdateRider = (props) => {
               mode="contained"
             >
               {" "}
-              Update
+              Edit
             </Button>
           </View>
         </View>
       )}
-      {
-        name === undefined && <Text style={styles.errorText}>{error}</Text>
-      }
+      {name === undefined && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -150,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     paddingBottom: 20,
-    paddingTop:20,
+    paddingTop: 20,
     backgroundColor: "#F6DDCC",
   },
   cardText: {
@@ -165,10 +190,10 @@ const styles = StyleSheet.create({
     margin: 15,
     paddingTop: 60,
   },
-  errorText:{
+  errorText: {
     textAlign: "center",
-    fontSize:18,
+    fontSize: 18,
     color: "red",
-    marginTop:300
-  }
+    marginTop: 300,
+  },
 });
