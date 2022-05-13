@@ -29,7 +29,7 @@ const ConfirmEmailScreen = () => {
   };
 
   const onSignInPressed = () => {
-    navigation.navigate("Admin");
+    navigation.navigate("Actor");
   };
 
   return (

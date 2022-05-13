@@ -15,26 +15,34 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 const AdminScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigation = useNavigation();
 
   //   admin sign In
 
   const handleAdminSignIn = () => {
+    setError("");
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const { displayName } = res.user;
-        navigation.navigate("AdminWork", {
-          user: displayName,
-        });
+        const licenseNumber = Number(displayName);
+        if (licenseNumber > 0) {
+          setError(`${email} is not an Admin`);
+        } else {
+          navigation.navigate("AdminWork", {
+            user: displayName,
+          });
+        }
       })
       .catch((err) => {
         const message = err.message;
+        // console.warn(message);
         if (message === "Firebase: Error (auth/user-not-found).") {
-          alert(`${email} is not an Admin`);
+          setError("Please Give The Valid Email");
         }
         if (message === "Firebase: Error (auth/wrong-password).") {
-          alert("Wrong Password");
+          setError("Wrong Password");
         } else
           () => {
             alert(message);
@@ -70,6 +78,8 @@ const AdminScreen = () => {
         />
 
         <View style={{ marginTop: "6%" }} />
+
+        {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
 
         <CustomButton text="Sign In" onPress={handleAdminSignIn} />
 

@@ -42,6 +42,8 @@ const EditRiderDetails = (props) => {
     image: riderImage,
   };
 
+  console.warn(riderDetails);
+
   const editRiderDetails = () => {
     fetch(`http://192.168.31.160:5000/update/${license_no}/`, {
       method: "PUT",

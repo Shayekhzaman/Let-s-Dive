@@ -1,5 +1,8 @@
 server url:
-1.updateRider
-2.addRider
+1.updateRider-2
+2.addRider-1
+3.SignUpScreen-1
+4.RiderScreen-1
+5.EditRider-1
 
 qr: npm install rn-qr-generator --save

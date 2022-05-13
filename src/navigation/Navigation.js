@@ -14,6 +14,7 @@ import AddRider from "../screens/AddRider";
 import UpdateRider from "../screens/UpdateRider";
 import RiderDetails from "../screens/RiderDetails";
 import EditRiderDetails from "../screens/EditRiderDetails";
+import RiderProfile from "../screens/RiderProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ const Navigation = () => {
         <Stack.Screen name="UpdateRider" component={UpdateRider} />
         <Stack.Screen name="RiderDetails" component={RiderDetails} />
         <Stack.Screen name="EditRider" component={EditRiderDetails}/>
+         <Stack.Screen name="RiderProfile" component={RiderProfile}/>
        
       </Stack.Navigator>
     </NavigationContainer>
