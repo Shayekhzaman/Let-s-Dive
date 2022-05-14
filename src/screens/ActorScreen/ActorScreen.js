@@ -32,7 +32,7 @@ const ActorScreen = () => {
       .then((res) => {
         const { displayName, email } = res.user;
         const licenseNumber = Number(displayName);
-        if (licenseNumber > 0) {
+        if (licenseNumber > 100) {
           setError("");
           navigation.navigate("Rider", {
             licenseNumber: licenseNumber,

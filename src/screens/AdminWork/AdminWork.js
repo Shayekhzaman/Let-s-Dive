@@ -26,8 +26,10 @@ const AdminWork = (props) => {
   }
 
   const [name, setName] = useState("");
+  const [police, setPolice] = useState("001");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [trafficPolice, setTrafficPolice] = useState(true);
 
   const navigation = useNavigation();
 
@@ -38,9 +40,21 @@ const AdminWork = (props) => {
         const { email } = res.user;
         handleEmailVerification();
         handleUpdateUser();
-        alert(
-          `${email} is Admin Now. Please check the email and verified asap`
-        );
+        {
+          trafficPolice ? handleUpdateUser(name) : handleUpdateUser(police);
+        }
+        {
+          trafficPolice
+            ? alert(
+                `${email} is Admin Now. Please check the email and verified asap`
+              )
+            : alert(
+                `${email} is Added as Traffic Police. Please check the email and verified asap`
+              );
+        }
+        // alert(
+        //   `${email} is Admin Now. Please check the email and verified asap`
+        // );
       })
       .catch((err) => {
         const message = err.message;
@@ -60,8 +74,8 @@ const AdminWork = (props) => {
   };
 
   //   update user profile
-  const handleUpdateUser = () => {
-    updateProfile(auth.currentUser, { displayName: name })
+  const handleUpdateUser = (props) => {
+    updateProfile(auth.currentUser, { displayName: props })
       .then((result) => {})
       .catch((err) => {
         console.warn(err.message);
@@ -98,28 +112,77 @@ const AdminWork = (props) => {
         <View style={styles.gap} />
 
         <View>
-          <Text style={styles.title}>Admin Panel</Text>
-          {user != undefined && <Text style={styles.user}>Hello {user}</Text>}
+          <Text style={styles.title}>Let's Handle the Process</Text>
+          {user != undefined && <Text style={styles.user}>Admin: {user}</Text>}
 
-          <Text
-            style={{
-              marginLeft: 10,
-              fontSize: 13,
-              fontWeight: "bold",
-              marginTop: 37,
-            }}
+          <View
+            style={{ marginTop: 60, backgroundColor: "#EDBB99", height: 180 }}
           >
-            Make an Admin
-          </Text>
+            <View style={styles.btnStyle}>
+              <Button
+                style={{ width: 206 }}
+                onPress={updateRider}
+                icon="update"
+                mode="contained"
+              >
+                {" "}
+                Update Rider
+              </Button>
+
+              <Button
+                style={{ width: 207 }}
+                onPress={addRider}
+                icon="bike"
+                mode="contained"
+              >
+                {" "}
+                Add New Rider
+              </Button>
+            </View>
+          </View>
+
+          {trafficPolice ? (
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 15,
+                fontWeight: "bold",
+                marginTop: 37,
+              }}
+            >
+              Make an Admin
+            </Text>
+          ) : (
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 15,
+                fontWeight: "bold",
+                marginTop: 37,
+              }}
+            >
+              Add Traffic Police
+            </Text>
+          )}
         </View>
         <View style={styles.root}>
-          <CustomInput
-            placeholder="User Name"
-            value={name}
-            setValue={setName}
+          {trafficPolice ? (
+            <CustomInput
+              placeholder="User Name"
+              value={name}
+              setValue={setName}
 
-            //   secureTextEntry={false}
-          />
+              //   secureTextEntry={false}
+            />
+          ) : (
+            <CustomInput
+              placeholder="User Name"
+              value={police}
+              setValue={setPolice}
+
+              //   secureTextEntry={false}
+            />
+          )}
 
           <CustomInput
             placeholder="Email"
@@ -140,57 +203,60 @@ const AdminWork = (props) => {
 
           {/* <CustomButton text="Add Admin" onPress={addAdmin} /> */}
           <Button
-            style={{ width: 450, backgroundColor:"#3B4CFA", height:50}}
+            style={{ width: 450, backgroundColor: "#3B4CFA", height: 50 }}
             onPress={addAdmin}
             icon="plus"
             mode="contained"
           >
             {" "}
-            Add New Admin
+            {trafficPolice ? "Add new Admin" : "Add traffic Police"}
           </Button>
         </View>
-      </View>
-      <Text style={{ textAlign: "center", marginTop: 60, color: "#EF0EA4" }}>
-        Rider Account Management{" "}
-      </Text>
-      <View style={{ marginTop: 60, backgroundColor: "#D3D6F9", height: 180 }}>
-        <View style={styles.btnStyle}>
-          <Button
-            style={{ width: 206 }}
-            onPress={updateRider}
-            icon="update"
-            mode="contained"
-          >
-            {" "}
-            Update Rider
-          </Button>
 
-          <Button
-            style={{ width: 207 }}
-            onPress={addRider}
-            icon="bike"
-            mode="contained"
-          >
-            {" "}
-            Add New Rider
-          </Button>
+        <View style={{ backgroundColor: "#F6DDCC", height: 185 }}>
+          <View style={styles.btnStyle}>
+            {trafficPolice === false && (
+              <Button
+                style={{ width: 210, backgroundColor: "#1ABC9C" }}
+                onPress={() => setTrafficPolice(true)}
+                icon="update"
+                mode="contained"
+              >
+                {" "}
+                Add Admin
+              </Button>
+            )}
+
+            {trafficPolice === true && (
+              <Button
+                style={{ width: 210, backgroundColor: "#7D3C98" }}
+                onPress={() => setTrafficPolice(false)}
+                icon="update"
+                mode="contained"
+              >
+                {" "}
+                Traffic Police
+              </Button>
+            )}
+
+            <Button
+              style={{
+                width: 180,
+                backgroundColor: "red",
+                // marginLeft: "auto",
+                // marginRight: 12,
+                // marginTop: 15,
+              }}
+              onPress={handleLogout}
+              icon="logout"
+              mode="contained"
+            >
+              {" "}
+              Logout
+            </Button>
+          </View>
         </View>
       </View>
-      <Button
-        style={{
-          width: 150,
-          backgroundColor: "red",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: 15,
-        }}
-        onPress={handleLogout}
-        icon="logout"
-        mode="contained"
-      >
-        {" "}
-        Logout
-      </Button>
     </ScrollView>
   );
 };

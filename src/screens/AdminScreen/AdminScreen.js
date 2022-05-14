@@ -27,6 +27,7 @@ const AdminScreen = () => {
       .then((res) => {
         const { displayName } = res.user;
         const licenseNumber = Number(displayName);
+        console.warn(displayName);
         if (licenseNumber > 0) {
           setError(`${email} is not an Admin`);
         } else {
