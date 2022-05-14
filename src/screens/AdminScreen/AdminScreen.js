@@ -27,13 +27,16 @@ const AdminScreen = () => {
       .then((res) => {
         const { displayName } = res.user;
         const licenseNumber = Number(displayName);
-        console.warn(displayName);
+        // console.warn(res.user);
         if (licenseNumber > 0) {
           setError(`${email} is not an Admin`);
         } else {
           navigation.navigate("AdminWork", {
             user: displayName,
           });
+
+          setEmail("");
+          setPassword("");
         }
       })
       .catch((err) => {

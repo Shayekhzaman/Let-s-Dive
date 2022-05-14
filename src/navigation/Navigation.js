@@ -15,6 +15,7 @@ import UpdateRider from "../screens/UpdateRider";
 import RiderDetails from "../screens/RiderDetails";
 import EditRiderDetails from "../screens/EditRiderDetails";
 import RiderProfile from "../screens/RiderProfile";
+import TrafficPoliceScanner from "../screens/TrafficPoliceScanner";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,14 +29,15 @@ const Navigation = () => {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
         <Stack.Screen name="TrafficPolice" component={TrafficPoliceScreen} />
+        <Stack.Screen name="PoliceScanner" component={TrafficPoliceScanner}/>
         <Stack.Screen name="Admin" component={AdminScreen} />
         <Stack.Screen name="AdminWork" component={AdminWork} />
         <Stack.Screen name="AddRider" component={AddRider} />
         <Stack.Screen name="UpdateRider" component={UpdateRider} />
         <Stack.Screen name="RiderDetails" component={RiderDetails} />
         <Stack.Screen name="EditRider" component={EditRiderDetails}/>
-         <Stack.Screen name="RiderProfile" component={RiderProfile}/>
-       
+        <Stack.Screen name="RiderProfile" component={RiderProfile}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

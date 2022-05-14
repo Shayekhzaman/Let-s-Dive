@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -34,6 +34,8 @@ const ActorScreen = () => {
         const licenseNumber = Number(displayName);
         if (licenseNumber > 100) {
           setError("");
+          setEmail("");
+          setPassword("");
           navigation.navigate("Rider", {
             licenseNumber: licenseNumber,
           });
@@ -70,8 +72,11 @@ const ActorScreen = () => {
     navigation.navigate("Admin");
   };
 
+ 
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+
       <View style={styles.root}>
         <Heading Logo={Logo} />
 

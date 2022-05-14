@@ -4,6 +4,8 @@ import { Card, FAB, Button, TextInput } from "react-native-paper";
 import QRCode from "react-native-qrcode-svg";
 import Logo7 from "../../../assets/images/Logo7.png";
 import Logo3 from "../../../assets/images/Logo3.png";
+import Logo4 from "../../../assets/images/Logo4.png";
+
 import bdLogo from "../../../assets/images/bdLogo.png";
 import licenseLogo from "../../../assets/images/licenseLogo.png";
 
@@ -193,15 +195,15 @@ const RiderScreen = (props) => {
 
             <View style={styles.qrStyle}>
               <QRCode
-                value={`${rider}`}
+                value={`${licenseNumber}`}
                 size={290}
-                color="red"
-                backgroundColor="black"
-                logo={Logo3}
+                color="black"
+                backgroundColor="white"
+                logo={Logo4}
                 logoSize={50}
                 logoMargin={2}
-                logoBorderRadius={15}
-                logoBackgroundColor="black"
+                logoBorderRadius={20}
+                logoBackgroundColor="#148F77"
               />
             </View>
           </View>

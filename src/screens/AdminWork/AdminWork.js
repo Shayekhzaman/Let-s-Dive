@@ -116,11 +116,12 @@ const AdminWork = (props) => {
           {user != undefined && <Text style={styles.user}>Admin: {user}</Text>}
 
           <View
-            style={{ marginTop: 60, backgroundColor: "#EDBB99", height: 180 }}
+            style={{ marginTop: 60, backgroundColor: "#F6DDCC", height: 180 }}
           >
             <View style={styles.btnStyle}>
               <Button
-                style={{ width: 206 }}
+                style={{ width: 206, backgroundColor: "#1D8348",
+              }}
                 onPress={updateRider}
                 icon="update"
                 mode="contained"
@@ -130,7 +131,7 @@ const AdminWork = (props) => {
               </Button>
 
               <Button
-                style={{ width: 207 }}
+                style={{ width: 207, backgroundColor: "#154360"}}
                 onPress={addRider}
                 icon="bike"
                 mode="contained"
@@ -243,9 +244,6 @@ const AdminWork = (props) => {
               style={{
                 width: 180,
                 backgroundColor: "red",
-                // marginLeft: "auto",
-                // marginRight: 12,
-                // marginTop: 15,
               }}
               onPress={handleLogout}
               icon="logout"

@@ -9,18 +9,20 @@ import { sendPasswordResetEmail } from "firebase/auth";
 
 const ConfirmEmailScreen = () => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   const navigation = useNavigation();
 
   const onConfirmPressed = () => {
+    setError("");
     sendPasswordResetEmail(auth, email)
       .then((res) => {
-        alert("Check the email and reset the password, Thank you");
+        setError("  Check the email and reset the password, \n                             Thank you");
       })
       .catch((err) => {
         const message = err.message;
         if (message === "Firebase: Error (auth/user-not-found).") {
-          alert("This user is not valid, Please insert valid user");
+          setError("This user is not valid, Please insert valid user");
         } else
           () => {
             alert(message);
@@ -41,7 +43,9 @@ const ConfirmEmailScreen = () => {
         <CustomInput placeholder="Email" value={email} setValue={setEmail} />
 
         <CustomButton text="Confirm" onPress={onConfirmPressed} />
-
+        {
+          error !== "" &&<Text style={{ color: "red"}}>{error}</Text>
+        }
         <CustomButton
           text="Back to Sign in"
           onPress={onSignInPressed}
