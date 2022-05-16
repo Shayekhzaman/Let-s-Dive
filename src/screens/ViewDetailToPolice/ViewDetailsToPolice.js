@@ -1,21 +1,13 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Card, FAB, Button, TextInput } from "react-native-paper";
-import QRCode from "react-native-qrcode-svg";
-import Logo7 from "../../../assets/images/Logo7.png";
-import Logo3 from "../../../assets/images/Logo3.png";
-import Logo4 from "../../../assets/images/Logo4.png";
-
+import { useNavigation } from "@react-navigation/native";
 import bdLogo from "../../../assets/images/bdLogo.png";
 import licenseLogo from "../../../assets/images/licenseLogo.png";
 
-import { useNavigation } from "@react-navigation/native";
-
-
-const RiderScreen = (props) => {
+const ViewDetailsToPolice = (props) => {
   const { licenseNumber } = props.route.params;
   const [rider, setRider] = useState("");
-  const [qrCode, setQrCode] = useState(false);
   const navigation = useNavigation();
 
   const {
@@ -40,24 +32,13 @@ const RiderScreen = (props) => {
       })
       .catch((err) => {
         setError("License Number Required");
-        // console.warn(err);
+        console.warn(err);
       });
   }, []);
-
-  // go to riderProfile
-  const riderProfile = () => {
-    navigation.navigate("RiderProfile",{
-      licenseNumber: license_no,
-      name: name,
-    });
-  };
-
-
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        {/* carf title */}
+        {/* card title */}
         <View style={styles.cardTitle}>
           <Image
             style={{
@@ -79,7 +60,12 @@ const RiderScreen = (props) => {
         </View>
 
         {/* card */}
-        <Card style={styles.cardStyle}>
+        <Card 
+        style={styles.cardStyle}
+        onPress = {()=> navigation.navigate("AddPoliceCase", {
+          licenseNumber : licenseNumber,
+        })}
+        >
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
@@ -140,90 +126,19 @@ const RiderScreen = (props) => {
             </View>
           </View>
         </Card>
-
-        {/*get qr code button */}
-
-        {qrCode !== true && (
-          <View>
-            <Button
-              style={{
-                width: 290,
-                backgroundColor: "#3B4CFA",
-                height: 50,
-                marginTop: 15,
-                // marginBottom: 70,
-              }}
-              onPress={() => {
-                setQrCode(true);
-              }}
-              icon="qrcode"
-              mode="contained"
-            >
-              {" "}
-              Get QR Code
-            </Button>
-            <FAB 
-              style={styles.fab} 
-              // small
-              icon={{uri:`${image}`}}
-              onPress={()=>riderProfile()}
-            />
-          </View>
-        )}
-
-        {/* cancel qr code  */}
-
-        {qrCode === true && (
-          <View>
-            <Button
-              style={{
-                // width: 250,
-                backgroundColor: "#C0392B",
-                height: 50,
-                // marginRight: "auto",
-                marginTop: 15,
-              }}
-              onPress={() => {
-                setQrCode(false);
-              }}
-              icon="qrcode"
-              mode="contained"
-            >
-              {" "}
-              Close QR Code
-            </Button>
-
-            <View style={styles.qrStyle}>
-              <QRCode
-                value={`${licenseNumber}`}
-                size={290}
-                color="black"
-                backgroundColor="white"
-                logo={Logo3}
-                logoSize={50}
-                logoMargin={2}
-                logoBorderRadius={20}
-                logoBackgroundColor="#A214E4"
-              />
-            </View>
-          </View>
-        )}
-
-        {qrCode === false && <View style={{ marginTop: 102 }}></View>}
       </View>
     </ScrollView>
   );
 };
 
-export default RiderScreen;
+export default ViewDetailsToPolice;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6DDCC",
+    backgroundColor: "#ddffcc",
     alignItems: "center",
-    justifyContent: "center",
-    // height: "100%",
+   
   },
   cardStyle: {
     width: "90%",
@@ -232,6 +147,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 20,
     backgroundColor: "#F4F6F6",
+    marginBottom : 170,
   },
   cardText: {
     textAlign: "center",
@@ -266,12 +182,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
-  fab: {
-    position: 'absolute',
-    margin: 105,
-    left: 195,
-    // bottom: -50,
-    // marginBottom:0,
-    backgroundColor: "#7D3C98",
-  },
+  
 });

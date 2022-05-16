@@ -16,6 +16,8 @@ import RiderDetails from "../screens/RiderDetails";
 import EditRiderDetails from "../screens/EditRiderDetails";
 import RiderProfile from "../screens/RiderProfile";
 import TrafficPoliceScanner from "../screens/TrafficPoliceScanner";
+import ViewDetailsToPolice from "../screens/ViewDetailToPolice";
+import AddPoliceCase from "../screens/AddPoliceCase/AddPoliceCase";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +39,8 @@ const Navigation = () => {
         <Stack.Screen name="RiderDetails" component={RiderDetails} />
         <Stack.Screen name="EditRider" component={EditRiderDetails}/>
         <Stack.Screen name="RiderProfile" component={RiderProfile}/>
-
+        <Stack.Screen name="ViewDetailsToPolice" component={ViewDetailsToPolice}/>
+        <Stack.Screen name="AddPoliceCase" component={AddPoliceCase}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

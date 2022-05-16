@@ -4,5 +4,6 @@ server url:
 3.SignUpScreen-1
 4.RiderScreen-1
 5.EditRider-1
+6.ViewDetailsToPolice-1
 
 qr: npm install rn-qr-generator --save
