@@ -64,6 +64,8 @@ const ViewDetailsToPolice = (props) => {
         style={styles.cardStyle}
         onPress = {()=> navigation.navigate("AddPoliceCase", {
           licenseNumber : licenseNumber,
+          rider: name,
+          image: image,
         })}
         >
           <View
