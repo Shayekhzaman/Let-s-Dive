@@ -78,6 +78,7 @@ const ViewDetailsToPolice = (props) => {
                 marginLeft: 10,
                 marginRight: "auto",
                 marginBottom: 15,
+                borderRadius: 15,
               }}
               source={{ uri: `${image}` }}
             />

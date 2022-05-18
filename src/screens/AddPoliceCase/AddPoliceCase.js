@@ -18,7 +18,6 @@ const AddPoliceCase = (props) => {
   const [riderCaseHistory, setRiderCaseHistory] = useState([]);
 
   const submitCase = () => {
-    
     const newCase = { licenseNumber, casePurpose, fine, date };
     // console.warn(newCase);
     fetch("http://192.168.31.160:3000/riderCase", {
@@ -30,8 +29,8 @@ const AddPoliceCase = (props) => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.warn("Update successful");
-       
+        alert("Case added successful");
+        
       })
       .catch((err) => {
         console.warn(err);
@@ -47,15 +46,32 @@ const AddPoliceCase = (props) => {
         console.warn(err);
       });
   }, []);
-  
 
+  // delete case
 
+  const deleteCase = (id) => {
+    // console.warn(id);
+    const url = `http://192.168.31.160:3000/riderCase/${id}`;
+    fetch(url, {
+      method:'DELETE',
+
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data > 0){
+        alert('Deleted Successfully');
+        const remainingCase = riderCaseHistory.filter(user => user._id !== id);
+        setRiderCaseHistory(remainingCase);
+      }
+      // console.warn(data);
+    })
+  };
 
   const renderData = (item) => {
     return (
       <Card style={styles.cardStyle}>
         <Text style={{ fontSize: 18, color: "#24248f" }}>
-         Case: {item.casePurpose}
+          Case: {item.casePurpose}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View>
@@ -78,8 +94,8 @@ const AddPoliceCase = (props) => {
             </Button>
             <Button
               style={{ margin: 10, backgroundColor: "red" }}
-              // onPress={insertRider}
-              icon="pencil"
+              onPress={() => deleteCase(item._id)}
+              icon="delete"
               mode="contained"
             >
               {" "}
