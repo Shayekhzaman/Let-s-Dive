@@ -45,7 +45,7 @@ const ActorScreen = () => {
       })
       .catch((err) => {
         const message = err.message;
-        console.warn(message);
+        // console.warn(message);
         if (message === "Firebase: Error (auth/user-not-found).") {
           setError("Please Create an Account");
         }

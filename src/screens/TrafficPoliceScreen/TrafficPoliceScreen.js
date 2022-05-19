@@ -24,12 +24,13 @@ const TrafficPoliceScreen = () => {
         // console.warn(res.user);
         if (licenseNumber < 100) {
           navigation.navigate("PoliceScanner");
+          setError("");
+          setEmail("");
+          setPassword("");
         }
         if (licenseNumber > 100) {
           setError("Unusual Email");
-        } else {
-          setError("Unusual Email");
-        }
+        } 
       })
       .catch((err) => {
         const message = err.message;
@@ -53,7 +54,7 @@ const TrafficPoliceScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#D5F5E3",}}>
       <View style={styles.root}>
         <Heading Logo={Logo} />
 
@@ -91,9 +92,10 @@ const TrafficPoliceScreen = () => {
 
 const styles = StyleSheet.create({
   root: {
+    flex:1,
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#D5F5E3",
+    // backgroundColor: "#D5F5E3",
     height: "100%",
   },
   gap: {

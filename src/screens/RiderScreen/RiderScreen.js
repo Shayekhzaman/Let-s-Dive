@@ -49,6 +49,7 @@ const RiderScreen = (props) => {
     navigation.navigate("RiderProfile",{
       licenseNumber: license_no,
       name: name,
+      image : image,
     });
   };
 
@@ -90,6 +91,7 @@ const RiderScreen = (props) => {
                 marginLeft: 10,
                 marginRight: "auto",
                 marginBottom: 15,
+                borderRadius: 10,
               }}
               source={{ uri: `${image}` }}
             />

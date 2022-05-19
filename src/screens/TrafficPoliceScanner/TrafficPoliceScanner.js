@@ -28,7 +28,7 @@ const TrafficPoliceScanner = () => {
   const handleBarCodeScan = ({ type, data }) => {
     setScanned(true);
     setData(data);
-    console.warn("type:" + type + "\nData:" + data);
+    // console.warn("type:" + type + "\nData:" + data);
   };
 
   // check permission and return the screens
@@ -76,9 +76,10 @@ const TrafficPoliceScanner = () => {
         <>
           <Button
             style={{
-              backgroundColor: "#6495ED",
+              backgroundColor: "#9B2109",
               width: 180,
             }}
+            onPress={()=> navigation.navigate("Actor")}
             mode="contained"
             icon="logout"
           >

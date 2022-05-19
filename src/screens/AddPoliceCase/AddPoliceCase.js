@@ -14,8 +14,9 @@ const AddPoliceCase = (props) => {
   const [casePurpose, setCasePurpose] = useState("");
   const [fine, setFine] = useState("");
   const [date, setDate] = useState("");
-
   const [riderCaseHistory, setRiderCaseHistory] = useState([]);
+  const [updateCaseField, setUpdateCaseField] = useState(false);
+  const [edit, setEdit] = useState({});
 
   const submitCase = () => {
     const newCase = { licenseNumber, casePurpose, fine, date };
@@ -30,7 +31,6 @@ const AddPoliceCase = (props) => {
       .then((resp) => resp.json())
       .then((data) => {
         alert("Case added successful");
-        
       })
       .catch((err) => {
         console.warn(err);
@@ -39,7 +39,7 @@ const AddPoliceCase = (props) => {
 
   // get rider case
   useEffect(() => {
-    fetch("http://192.168.31.160:3000/riderCase")
+    fetch(`http://192.168.31.160:3000/riderCase/${licenseNumber}`)
       .then((res) => res.json())
       .then((data) => setRiderCaseHistory(data))
       .catch((err) => {
@@ -50,21 +50,46 @@ const AddPoliceCase = (props) => {
   // delete case
 
   const deleteCase = (id) => {
-    // console.warn(id);
+    // const proceed = window.confirm("Are you sure, you want to delete?");
+
     const url = `http://192.168.31.160:3000/riderCase/${id}`;
     fetch(url, {
-      method:'DELETE',
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data > 0) {
+          alert("Deleted Successfully");
+          const remainingCase = riderCaseHistory.filter(
+            (user) => user._id !== id
+          );
+          setRiderCaseHistory(remainingCase);
+        }
+        // console.warn(data);
+      });
+  };
 
+  // update case
+  const updateCase = () => {
+    const id = edit._id;
+    const updateCase = { casePurpose, fine, date };
+    // console.warn(id);
+
+    const url = `http://192.168.31.160:3000/riderCase/${id}`;
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateCase),
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data > 0){
-        alert('Deleted Successfully');
-        const remainingCase = riderCaseHistory.filter(user => user._id !== id);
-        setRiderCaseHistory(remainingCase);
-      }
-      // console.warn(data);
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert("Case update successful");
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
   };
 
   const renderData = (item) => {
@@ -85,12 +110,18 @@ const AddPoliceCase = (props) => {
           <View>
             <Button
               style={{ margin: 10, backgroundColor: "blue" }}
-              // onPress={insertRider}
+              onPress={() => {
+                setUpdateCaseField(true),
+                  setEdit(item),
+                  setCasePurpose(item.casePurpose),
+                  setFine(item.fine),
+                  setDate(item.date);
+              }}
               icon="pencil"
               mode="contained"
             >
               {" "}
-              Update
+              Edit
             </Button>
             <Button
               style={{ margin: 10, backgroundColor: "red" }}
@@ -108,59 +139,142 @@ const AddPoliceCase = (props) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#ffbb33",}}>
       <View style={styles.container}>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 22,
-            marginTop: 35,
-            fontWeight: "bold",
-            color: "#0033cc",
-          }}
-        >
-          Traffic Case File{" "}
-        </Text>
+        {/* case update field */}
+        {updateCaseField ? (
+          <View>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 22,
+                marginTop: 35,
+                fontWeight: "bold",
+                color: "#0033cc",
+              }}
+            >
+              Update Case File{" "}
+            </Text>
 
-        <TextInput
-          style={{ margin: 20 }}
-          label="Case purpose"
-          mode="outlined"
-          value={casePurpose}
-          onChangeText={(text) => setCasePurpose(text)}
-        />
+            <TextInput
+              style={{ margin: 20 }}
+              label="Case purpose"
+              mode="outlined"
+              value={casePurpose}
+              onChangeText={(text) => setCasePurpose(text)}
+            />
 
-        <TextInput
-          style={{ margin: 20 }}
-          label="Fine"
-          mode="outlined"
-          value={fine}
-          onChangeText={(text) => setFine(text)}
-        />
+            <TextInput
+              style={{ margin: 20 }}
+              label="Fine"
+              mode="outlined"
+              value={fine}
+              onChangeText={(text) => setFine(text)}
+            />
 
-        <TextInput
-          style={{ margin: 20 }}
-          label="Date"
-          mode="outlined"
-          value={date}
-          onChangeText={(text) => setDate(text)}
-        />
+            <TextInput
+              style={{ margin: 20 }}
+              label="Date"
+              mode="outlined"
+              value={date}
+              onChangeText={(text) => setDate(text)}
+            />
 
-        <Button
-          style={{
-            //   width: 150,
-            backgroundColor: "#ff4d4d",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: 5,
-          }}
-          onPress={submitCase}
-          icon="plus"
-          mode="contained"
-        >
-          {" "}
-          Submit case file
-        </Button>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
+            >
+              <Button
+                style={{
+                  //   width: 150,
+                  backgroundColor: "#87DA16",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: 5,
+                }}
+                onPress={updateCase}
+                icon="update"
+                mode="contained"
+              >
+                {" "}
+                Update
+              </Button>
+              <Button
+                style={{
+                  //   width: 150,
+                  backgroundColor: "#ff4d4d",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: 5,
+                }}
+                onPress={() => {
+                  setUpdateCaseField(false),
+                    setCasePurpose(""),
+                    setFine(""),
+                    setDate("");
+                }}
+                icon="cancel"
+                mode="contained"
+              >
+                {" "}
+                cancel
+              </Button>
+            </View>
+          </View>
+        ) : (
+          <View>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 22,
+                marginTop: 35,
+                fontWeight: "bold",
+                color: "#0033cc",
+              }}
+            >
+              Add Case File{" "}
+            </Text>
+
+            <TextInput
+              style={{ margin: 20 }}
+              label="Case purpose"
+              mode="outlined"
+              value={casePurpose}
+              onChangeText={(text) => setCasePurpose(text)}
+            />
+
+            <TextInput
+              style={{ margin: 20 }}
+              label="Fine"
+              mode="outlined"
+              value={fine}
+              onChangeText={(text) => setFine(text)}
+            />
+
+            <TextInput
+              style={{ margin: 20 }}
+              label="Date"
+              mode="outlined"
+              value={date}
+              onChangeText={(text) => setDate(text)}
+            />
+
+            <Button
+              style={{
+                //   width: 150,
+                backgroundColor: "#ff4d4d",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 5,
+              }}
+              onPress={submitCase}
+              icon="plus"
+              mode="contained"
+            >
+              {" "}
+              Submit case file
+            </Button>
+          </View>
+        )}
 
         <View style={{ marginTop: 40 }}>
           <View
@@ -192,6 +306,9 @@ const AddPoliceCase = (props) => {
               </Text>
             </View>
           </View>
+        </View>
+        {/* case history */}
+        {riderCaseHistory.length > 0 ? (
           <FlatList
             data={riderCaseHistory}
             renderItem={({ item }) => {
@@ -199,7 +316,11 @@ const AddPoliceCase = (props) => {
             }}
             keyExtractor={(item) => `${item._id}`}
           />
-        </View>
+        ) : (
+          <Text style={styles.caseText}>Don't have any case history</Text>
+        )}
+
+       
       </View>
     </ScrollView>
   );
@@ -211,11 +332,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // textAlign: "center"
-    backgroundColor: "#ffbb33",
+   
   },
   cardStyle: {
     margin: 10,
     padding: 10,
     // fontWeight:"bold",
+  },
+  caseText: {
+    color: "#006600",
+    textAlign: "center",
+    marginTop: 90,
+    fontWeight: "bold",
   },
 });

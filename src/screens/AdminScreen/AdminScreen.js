@@ -61,7 +61,7 @@ const AdminScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#F9EBEA",}}>
       <View style={styles.root}>
         <Heading Logo={Logo} />
 
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   root: {
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#F9EBEA",
-    height: "100%",
+   
+    // height: "100%",
   },
   gap: {
     marginTop: "50%",
