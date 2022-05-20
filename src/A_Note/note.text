@@ -6,5 +6,6 @@ server url:
 5.EditRider-1
 6.ViewDetailsToPolice-1
 7.AddPoliceCase- 4
+8.RiderProfile -1
 
 qr: npm install rn-qr-generator --save

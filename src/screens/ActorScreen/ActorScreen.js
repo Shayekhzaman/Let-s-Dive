@@ -6,10 +6,11 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 
-import Logo from "../../../assets/images/Logo8.png";
-import Heading from "../../components/Heading";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { auth } from "../../../firebase/Admin/firebase.config";
@@ -72,85 +73,161 @@ const ActorScreen = () => {
     navigation.navigate("Admin");
   };
 
- 
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-
-      <View style={styles.root}>
-        <Heading Logo={Logo} />
-
-        <View style={styles.gap} />
-
-        <CustomInput
-          placeholder="Email Address"
-          value={email}
-          setValue={setEmail}
-          // secureTextEntry={false}
-        />
-
-        <CustomInput
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-          // or just secureTextEntry
-        />
-        <View style={styles.gaps} />
-
-        {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
-        {forgetPassword === true && (
-          <CustomButton
-            text="Forgot Password? Reset It"
-            onPress={() => navigation.navigate("ConfirmEmail")}
-            type="TERTIARY"
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ flex: 1, backgroundColor: "#ffffff" }}
+    >
+      <ImageBackground
+        source={require("../../../assets/images/background.png")}
+        style={{ height: Dimensions.get("window").height / 2.5 }}
+      >
+        <View style={styles.logoView}>
+          <Image
+            source={require("../../../assets/images/Logo4.png")}
+            style={{ height: 270, width: 190 }}
           />
-        )}
+        </View>
+      </ImageBackground>
 
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+      {/* Bottom */}
 
-        <CustomButton
-          text="Don't have an account? Create one"
-          onPress={onRiderSignUpPressed}
-          type="TERTIARY"
-        />
+      <View style={styles.bottomView}>
+        <View style={{ padding: 40 }}>
+          <Text style={{ color: "#4632A1", fontSize: 34 }}>Welcome</Text>
+          <Text>
+            Don't have an account?
+            <Text
+              style={{
+                color: "#004d00",
+                fontStyle: "italic",
+                fontWeight: "bold",
+              }}
+              onPress={onRiderSignUpPressed}
+            >
+              {" "}
+              Register now
+            </Text>
+          </Text>
 
-        <View style={styles.gaps} />
+          {/* input view */}
+          <View style={{ marginTop: 50 }}>
+            <TextInput
+              style={styles.input}
+              label="Name"
+              // mode="outlined"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
 
-        <CustomButton
-          text="Traffic Police"
-          onPress={onTrafficPolice}
-          bgColor="#FAE9EA"
-          fgColor="#DD4D44"
-        />
-        <View style={styles.gaps} />
+            <TextInput
+              style={styles.input}
+              label="Password"
+              // mode="outlined"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}
+            />
 
-        <CustomButton
-          text="Admin"
-          onPress={onAdmin}
-          bgColor="#FFA07A"
-          fgColor="#363636"
-        />
+            {/* error and forgot pass word view */}
+            <View style={{ alignItems: "center" }}>
+              {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
+              {forgetPassword === true && (
+                <Text onPress={() => navigation.navigate("ConfirmEmail")}>
+                  {" "}
+                  Forgot Password?{" "}
+                  <Text style={{ color: "#66004d" }}>Reset It </Text>
+                </Text>
+              )}
+            </View>
+
+            <Button
+              style={{
+                width: 270,
+                backgroundColor: "#000066",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 45,
+                marginBottom: 15,
+                borderRadius: 20,
+              }}
+              onPress={onSignInPressed}
+              icon="login"
+              mode="contained"
+            >
+              {" "}
+              Sign in
+            </Button>
+
+            {/* traffic and admin view */}
+            <View style={styles.buttonStyle}>
+              <Button
+                style={{
+                  // width: 270,
+                  backgroundColor: "#cc3300",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  // marginTop: 45,
+                  // marginBottom: 15,
+                  borderRadius: 20,
+                }}
+                onPress={onTrafficPolice}
+                icon={require("../../../assets/icons/police.png")}
+                mode="contained"
+              >
+                {" "}
+                police
+              </Button>
+              <Button
+                style={{
+                  // width: 270,
+                  backgroundColor: "#002080",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  // marginTop: 45,
+                  // marginBottom: 15,
+                  borderRadius: 20,
+                }}
+                onPress={onAdmin}
+                icon={require("../../../assets/icons/admin.png")}
+                mode="contained"
+              >
+                {" "}
+                admin
+              </Button>
+            </View>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
+  logoView: {
+    flex: 1,
     alignItems: "center",
-    padding: 20,
+    justifyContent: "center",
   },
-  logo: {
-    width: "50%",
-    maxWidth: 300,
-    maxHeight: 200,
+  bottomView: {
+    flex: 1.5,
+    backgroundColor: "#ffffff",
+    bottom: 50,
+    borderTopStartRadius: 60,
+    borderTopEndRadius: 60,
   },
-  gap: {
-    marginTop: "10%",
+  input: {
+    margin: 5,
+    borderColor: "#7a42f4",
+    borderBottomWidth: 2,
+    height: 55,
+    backgroundColor: "#ffffff",
   },
-  gaps: {
-    marginBottom: "5%",
+  buttonStyle: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    margin: 15,
+    paddingTop: 60,
   },
 });
 

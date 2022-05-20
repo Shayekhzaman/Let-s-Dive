@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Logo from "../../../assets/images/Logo5.png";
 import Heading from "../../components/Heading";
-
+import {Button} from 'react-native-paper';
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 
@@ -61,48 +61,81 @@ const AdminScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#F9EBEA",}}>
-      <View style={styles.root}>
-        <Heading Logo={Logo} />
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "#1affd1" }}
+    >
+      <Heading Logo={Logo} />
+      {/* bottom view */}
+      <View style={styles.bottomView}>
+        <View style={{ padding: 40 }}>
+          <Text style={styles.title}>Admin Sign In</Text>
+          <CustomInput
+            placeholder="Email"
+            value={email}
+            setValue={setEmail}
+            //   secureTextEntry={false}
+          />
+          <CustomInput
+            placeholder="Password"
+            value={password}
+            setValue={setPassword}
+            secureTextEntry={true}
+            // or just secureTextEntry
+          />
+          <View style={{ marginTop: "6%" }} />
+          {/* error message */}
+          <View style={{ alignItems: "center" }}>
+            {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
+          </View>
 
-        <View style={styles.gap} />
-        <CustomInput
-          placeholder="Email"
-          value={email}
-          setValue={setEmail}
-          //   secureTextEntry={false}
-        />
+          <Button
+            style={{
+              width: 370,
+              height: 50,
+              backgroundColor: "#1a1aff",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: 15,
+              // marginBottom: 15,
+              borderRadius: 10,
+            }}
+            onPress={handleAdminSignIn}
+            icon={require("../../../assets/icons/login.png")}
+            mode="contained"
+          >
+            {" "}
+            Sign in
+          </Button>
 
-        <CustomInput
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-          // or just secureTextEntry
-        />
-
-        <View style={{ marginTop: "6%" }} />
-
-        {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
-
-        <CustomButton text="Sign In" onPress={handleAdminSignIn} />
-
-        <CustomButton
-          text="Forgot Password? Reset It"
-          onPress={handleAdminPasswordReset}
-          type="TERTIARY"
-        />
+          <CustomButton
+         
+            text="Forgot Password? Reset It"
+            onPress={handleAdminPasswordReset}
+            type="TERTIARY"
+          />
+          <View  style={{marginBottom:60}}></View>
+        </View>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
-    alignItems: "center",
-    padding: 20,
-   
-    // height: "100%",
+  bottomView: {
+    flex: 1.5,
+    backgroundColor: "#aaff80",
+    // bottom: 50,
+    borderTopStartRadius: 60,
+    borderTopEndRadius: 60,
+    marginTop: 80,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#051C60",
+    margin: 10,
+    marginBottom: 60,
   },
   gap: {
     marginTop: "50%",
