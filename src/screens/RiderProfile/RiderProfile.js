@@ -14,7 +14,7 @@ const RiderProfile = (props) => {
   const navigation = useNavigation();
   const { licenseNumber, name, image } = props.route.params;
   const [riderCaseHistory, setRiderCaseHistory] = useState([]);
-  const [updateCaseField, setUpdateCaseField] = useState(false);
+  const [error, setError] = useState("Loading...");
 
   const handleLogout = () => {
     navigation.navigate("Actor");
@@ -24,7 +24,12 @@ const RiderProfile = (props) => {
   useEffect(() => {
     fetch(`http://192.168.31.160:3000/riderCase/${licenseNumber}`)
       .then((res) => res.json())
-      .then((data) => setRiderCaseHistory(data))
+      .then((data) => {
+        if(data.length === 0){
+          setError("Dont have any case file yet")
+        }
+        setRiderCaseHistory(data)
+      })
       .catch((err) => {
         console.warn(err);
       });
@@ -33,6 +38,7 @@ const RiderProfile = (props) => {
   // console.warn(riderCaseHistory);
 
   const renderData = (item) => {
+    
     return (
       <Card style={styles.cardStyle}>
         <Text style={{ fontSize: 18, color: "#24248f" }}>
@@ -53,14 +59,17 @@ const RiderProfile = (props) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#F6DDCC"}}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "#F6DDCC" }}
+    >
       <View style={styles.container}>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
             marginTop: 35,
-            marginBottom:60,
+            marginBottom: 60,
           }}
         >
           <Image
@@ -121,11 +130,13 @@ const RiderProfile = (props) => {
             data={riderCaseHistory}
             renderItem={({ item }) => {
               return renderData(item);
+              
             }}
             keyExtractor={(item) => `${item._id}`}
           />
         ) : (
-          <Text style={styles.caseText}>Don't have any case history yet</Text>
+          <Text style={styles.caseText}>{error}</Text>
+          
         )}
       </View>
     </ScrollView>
@@ -146,8 +157,8 @@ const styles = StyleSheet.create({
   cardStyle: {
     // margin: 20 ,
     marginTop: 25,
-    marginLeft:20,
-    marginRight:20,
+    marginLeft: 20,
+    marginRight: 20,
     padding: 10,
     // fontWeight:"bold",
   },
@@ -157,6 +168,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // justifyContent: "center",
     fontWeight: "bold",
-    marginTop:250,
+    marginTop: 250,
   },
 });

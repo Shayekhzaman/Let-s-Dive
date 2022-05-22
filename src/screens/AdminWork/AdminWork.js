@@ -107,21 +107,27 @@ const AdminWork = (props) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor :'#ffffff'}}>
       <View>
-        <View style={styles.gap} />
+        {/* <View style={styles.gap} /> */}
 
         <View>
           <Text style={styles.title}>Let's Handle the Process</Text>
-          {user != undefined && <Text style={styles.user}>Admin: {user}</Text>}
+          {user != undefined && <Text style={styles.user}>Admin: <Text style={{color:'#0000b3'}}>{user}</Text></Text>}
 
           <View
-            style={{ marginTop: 60, backgroundColor: "#F6DDCC", height: 180 }}
+            style={{
+              marginTop: 60,
+              backgroundColor: "#cceeff",
+              height: 180,
+              borderTopStartRadius: 60,
+              borderBottomEndRadius: 60,
+            }}
+            // F6DDCC
           >
             <View style={styles.btnStyle}>
               <Button
-                style={{ width: 206, backgroundColor: "#1D8348",
-              }}
+                style={{ width: 206, backgroundColor: "#1D8348" }}
                 onPress={updateRider}
                 icon="update"
                 mode="contained"
@@ -131,7 +137,7 @@ const AdminWork = (props) => {
               </Button>
 
               <Button
-                style={{ width: 207, backgroundColor: "#154360"}}
+                style={{ width: 207, backgroundColor: "#154360" }}
                 onPress={addRider}
                 icon="bike"
                 mode="contained"
@@ -149,6 +155,7 @@ const AdminWork = (props) => {
                 fontSize: 15,
                 fontWeight: "bold",
                 marginTop: 37,
+                fontStyle: 'italic',
               }}
             >
               Make an Admin
@@ -160,6 +167,7 @@ const AdminWork = (props) => {
                 fontSize: 15,
                 fontWeight: "bold",
                 marginTop: 37,
+                fontStyle: 'italic',
               }}
             >
               Add Traffic Police
@@ -206,7 +214,7 @@ const AdminWork = (props) => {
           <Button
             style={{ width: 450, backgroundColor: "#3B4CFA", height: 50 }}
             onPress={addAdmin}
-            icon="plus"
+            icon={require("../../../assets/icons/add.png")}
             mode="contained"
           >
             {" "}
@@ -214,13 +222,21 @@ const AdminWork = (props) => {
           </Button>
         </View>
 
-        <View style={{ backgroundColor: "#F6DDCC", height: 185 }}>
+        <View
+          style={{
+            backgroundColor: "#F6DDCC",
+            height: 185,
+            borderTopStartRadius: 50,
+            borderTopEndRadius: 50,
+            marginTop: "5%",
+          }}
+        >
           <View style={styles.btnStyle}>
             {trafficPolice === false && (
               <Button
                 style={{ width: 210, backgroundColor: "#1ABC9C" }}
                 onPress={() => setTrafficPolice(true)}
-                icon="update"
+                icon={require("../../../assets/icons/admin.png")}
                 mode="contained"
               >
                 {" "}
@@ -232,7 +248,8 @@ const AdminWork = (props) => {
               <Button
                 style={{ width: 210, backgroundColor: "#7D3C98" }}
                 onPress={() => setTrafficPolice(false)}
-                icon="update"
+                icon={require("../../../assets/icons/police.png")}
+                // {require("../../../assets/icons/police.png")}
                 mode="contained"
               >
                 {" "}
@@ -277,8 +294,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     backgroundColor: "#FE9B93",
-    // marginTop: 30,
-    height: 60,
+    padding: 10,
   },
   user: {
     textAlign: "right",

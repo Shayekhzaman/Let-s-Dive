@@ -17,6 +17,7 @@ const AddPoliceCase = (props) => {
   const [riderCaseHistory, setRiderCaseHistory] = useState([]);
   const [updateCaseField, setUpdateCaseField] = useState(false);
   const [edit, setEdit] = useState({});
+  const [error, setError] = useState("Loading...");
 
   const submitCase = () => {
     const newCase = { licenseNumber, casePurpose, fine, date };
@@ -41,7 +42,13 @@ const AddPoliceCase = (props) => {
   useEffect(() => {
     fetch(`http://192.168.31.160:3000/riderCase/${licenseNumber}`)
       .then((res) => res.json())
-      .then((data) => setRiderCaseHistory(data))
+      .then((data) => {
+       
+        if(data.length === 0){
+          setError("Don't have any case history");
+        }
+        setRiderCaseHistory(data)
+      })
       .catch((err) => {
         console.warn(err);
       });
@@ -317,7 +324,7 @@ const AddPoliceCase = (props) => {
             keyExtractor={(item) => `${item._id}`}
           />
         ) : (
-          <Text style={styles.caseText}>Don't have any case history</Text>
+          <Text style={styles.caseText}>{error}</Text>
         )}
 
        

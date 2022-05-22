@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
-
+import {Button} from 'react-native-paper';
 import { auth } from "../../../firebase/Admin/firebase.config";
 import { sendPasswordResetEmail } from "firebase/auth";
 
@@ -35,18 +35,38 @@ const ConfirmEmailScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:'#f9ecf2'}}>
       <View style={styles.root}>
         <View style={styles.gap} />
         <Text style={styles.title}>Give the valid Email</Text>
 
         <CustomInput placeholder="Email" value={email} setValue={setEmail} />
 
-        <CustomButton text="Confirm" onPress={onConfirmPressed} />
+        {/* <CustomButton text="Confirm" onPress={onConfirmPressed} /> */}
         {
           error !== "" &&<Text style={{ color: "red"}}>{error}</Text>
         }
-        <CustomButton
+       
+        <Button
+            style={{
+              width: 370,
+              height: 50,
+              backgroundColor: "#1a1aff",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: 15,
+              // marginBottom: 15,
+              borderRadius: 10,
+            }}
+            onPress={onConfirmPressed}
+            icon={require("../../../assets/icons/email.png")}
+            mode="contained"
+          >
+            {" "}
+            confirm
+          </Button>
+
+          <CustomButton
           text="Back to Sign in"
           onPress={onSignInPressed}
           type="TERTIARY"

@@ -53,7 +53,7 @@ const AddRider = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#85adad'}}>
       <View style={{ flex: 1 }}>
         <Text style={styles.heading}>Add New Rider</Text>
         <View style={styles.root}>

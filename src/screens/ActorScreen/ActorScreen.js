@@ -114,7 +114,7 @@ const ActorScreen = () => {
           <View style={{ marginTop: 50 }}>
             <TextInput
               style={styles.input}
-              label="Name"
+              label="Email"
               // mode="outlined"
               value={email}
               onChangeText={(text) => setEmail(text)}
