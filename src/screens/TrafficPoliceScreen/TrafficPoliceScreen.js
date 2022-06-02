@@ -38,16 +38,17 @@ const TrafficPoliceScreen = () => {
       })
       .catch((err) => {
         const message = err.message;
-        console.warn(message);
+        // console.warn(message);
         if (message === "Firebase: Error (auth/user-not-found).") {
           setError("Please Give The Valid Email");
         }
         if (message === "Firebase: Error (auth/wrong-password).") {
           setError("Wrong Password");
-        } else
-          () => {
-            alert(message);
-          };
+        } 
+        // else
+        //   () => {
+        //     alert(message);
+        //   };
       });
   };
 

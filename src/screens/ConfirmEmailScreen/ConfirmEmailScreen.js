@@ -14,10 +14,12 @@ const ConfirmEmailScreen = () => {
   const navigation = useNavigation();
 
   const onConfirmPressed = () => {
+    console.warn(email);
     setError("");
     sendPasswordResetEmail(auth, email)
       .then((res) => {
         setError("  Check the email and reset the password, \n                             Thank you");
+       
       })
       .catch((err) => {
         const message = err.message;
